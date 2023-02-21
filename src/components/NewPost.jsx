@@ -14,8 +14,18 @@ function NewPost({ onCancel }) {
     setEnteredAuthor(event.target.value);
   }
 
+  function submitHandler(event) {
+    event.preventDefault();
+    const postData = {
+      body: enteredBody,
+      author: enteredAuthor,
+    };
+    console.log(postData);
+    onCancel();
+  }
+
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={submitHandler}>
       <p>
         <label htmlFor='body'>Text</label>
         <textarea id='body' required rows={3} onChange={bodyChangeHandler} />
