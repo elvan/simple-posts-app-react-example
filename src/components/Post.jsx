@@ -1,6 +1,6 @@
 import classes from './Post.module.css';
 
-export default function Post(props) {
+function Post(props) {
   return (
     <div className={classes.post}>
       <p className={classes.author}>{props.author}</p>
@@ -8,3 +8,5 @@ export default function Post(props) {
     </div>
   );
 }
+
+export default Post;
