@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import Modal from './Modal';
 import NewPost from './NewPost';
 import Post from './Post';
@@ -7,11 +8,7 @@ import classes from './PostsList.module.css';
 function PostsList({ isPosting, onStopPosting }) {
   const [posts, setPosts] = useState([]);
 
-  const [enteredBody, setEnteredBody] = useState('');
-  const [enteredAuthor, setEnteredAuthor] = useState('');
-
   function addPostHandler(postData) {
-    console.log(postData);
     setPosts((existingPosts) => [postData, ...existingPosts]);
   }
 
@@ -22,21 +19,19 @@ function PostsList({ isPosting, onStopPosting }) {
           <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
         </Modal>
       )}
-      <ul className={classes.posts}>
-        <Post author={enteredAuthor} body={enteredBody} />
-        <Post
-          author='Aaron'
-          body='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore quam dolorem recusandae distinctio qui voluptatem expedita quo cumque, nisi nesciunt veniam illo aliquam quaerat odit maxime similique obcaecati inventore amet.'
-        />
-        <Post
-          author='Billy'
-          body='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas repellat unde corrupti aut ipsa ut ipsum perspiciatis ea cumque voluptas sapiente neque dicta asperiores, mollitia atque sit in architecto corporis.'
-        />
-        <Post
-          author='Cindy'
-          body='Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate vel repudiandae officiis consequatur delectus consectetur praesentium autem ullam asperiores ipsum fuga dolor error aspernatur labore eveniet, veritatis atque quae at.'
-        />
-      </ul>
+      {posts.length > 0 && (
+        <ul className={classes.posts}>
+          {posts.map((post) => (
+            <Post key={post.body} author={post.author} body={post.body} />
+          ))}
+        </ul>
+      )}
+      {posts.length === 0 && (
+        <div style={{ textAlign: 'center', color: 'white' }}>
+          <h2>There are no posts yet.</h2>
+          <p>Start adding some!</p>
+        </div>
+      )}
     </>
   );
 }
